@@ -56,31 +56,34 @@ public class ProductServiceIImpl implements ProductService {
     @Override 
     public ProductResponse createProduct(ProductCreateRequest productCreateRequest) {
         Products product = productMapper.toEntity(productCreateRequest);
-        return productMapper.toResponse(productRepository.save(product));
+        productRepository.save(product);
+        return productMapper.toResponse(product);
     }
 
 
     @Override
-    public Products updateProduct(Long id, ProductUpdateRequest productUpdateRequest) {
-        productRepository.findById(id)
+    public ProductResponse updateProduct(Long id, ProductUpdateRequest productUpdateRequest) {
+        Products product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product with ID " + id + " not found"));
-        Products product = productMapper.toEntity(productUpdateRequest);
-        product.setId(id);
-        return productRepository.save(product);
+        productMapper.toEntity(productUpdateRequest);
+        productRepository.save(product);
+        return productMapper.toResponse(product);
     }
 
     @Override
     public void deleteProduct(Long id) {
         Products product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product with ID " + id + " not found"));
-        productRepository.delete(product);
+        productRepository.delete(product);    
     }
 
     @Override
     public ProductResponse getProductBySKU(String productSKU) {
         Products product = productRepository.findByProductSKU(productSKU)
-                .orElseThrow(() -> new ResourceNotFoundException("Product with SKU " + productSKU + " not found"));
+        .orElseThrow(()-> new ResourceNotFoundException("Product with SKU " + productSKU + " not found"));
         return productMapper.toResponse(product);
     }
+
+    // Implement the methods defined in the ProductService interface
 
 }

@@ -4,7 +4,7 @@ import java.util.List;
 import com.example.liquorApp.dto.request.ProductCreateRequest;
 import com.example.liquorApp.dto.request.ProductUpdateRequest;
 import com.example.liquorApp.dto.response.ProductResponse;
-import com.example.liquorApp.entities.Products;
+
 
 
 public interface ProductService {
@@ -17,7 +17,7 @@ public interface ProductService {
 
     ProductResponse createProduct(ProductCreateRequest productCreateRequest);
 
-    Products updateProduct(Long id, ProductUpdateRequest productUpdateRequest);
+    ProductResponse updateProduct(Long id, ProductUpdateRequest productUpdateRequest);
 
     void deleteProduct(Long id);
 
