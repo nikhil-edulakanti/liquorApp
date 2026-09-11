@@ -1,6 +1,7 @@
 package com.example.liquorApp.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -11,6 +12,8 @@ public interface ProductRepository extends JpaRepository<Products, Long> {
     // You can define custom query methods here if needed
 
     List<Products> findByCategory(String category);
+
+    Optional<Products> findByProductSKU(String productSKU);
 
     
 } 

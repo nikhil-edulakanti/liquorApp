@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.liquorApp.dto.request.ProductCreateRequest;
+import com.example.liquorApp.dto.request.ProductUpdateRequest;
 import com.example.liquorApp.dto.response.ProductResponse;
 import com.example.liquorApp.entities.Products;
 import com.example.liquorApp.mapper.ProductMapper;
@@ -45,35 +47,40 @@ public class ProductServiceIImpl implements ProductService {
     }
 
     @Override
-    public Products getProductById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getProductById'");
+    public ProductResponse getProductById(Long id) {
+        Products product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product with ID " + id + " not found"));
+        return productMapper.toResponse(product);
     }
 
-    @Override
-    public Products createProduct(Products product) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createProduct'");
+    @Override 
+    public ProductResponse createProduct(ProductCreateRequest productCreateRequest) {
+        Products product = productMapper.toEntity(productCreateRequest);
+        return productMapper.toResponse(productRepository.save(product));
     }
 
+
     @Override
-    public Products updateProduct(Long id, Products product) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateProduct'");
+    public Products updateProduct(Long id, ProductUpdateRequest productUpdateRequest) {
+        productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product with ID " + id + " not found"));
+        Products product = productMapper.toEntity(productUpdateRequest);
+        product.setId(id);
+        return productRepository.save(product);
     }
 
     @Override
     public void deleteProduct(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteProduct'");
+        Products product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product with ID " + id + " not found"));
+        productRepository.delete(product);
     }
 
     @Override
-    public Products getProductBySKU(String productSKU) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getProductBySKU'");
+    public ProductResponse getProductBySKU(String productSKU) {
+        Products product = productRepository.findByProductSKU(productSKU)
+                .orElseThrow(() -> new ResourceNotFoundException("Product with SKU " + productSKU + " not found"));
+        return productMapper.toResponse(product);
     }
-
-    // Implement the methods defined in the ProductService interface
 
 }

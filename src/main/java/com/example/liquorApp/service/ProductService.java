@@ -1,6 +1,8 @@
 package com.example.liquorApp.service;
 import java.util.List;
 
+import com.example.liquorApp.dto.request.ProductCreateRequest;
+import com.example.liquorApp.dto.request.ProductUpdateRequest;
 import com.example.liquorApp.dto.response.ProductResponse;
 import com.example.liquorApp.entities.Products;
 
@@ -11,15 +13,15 @@ public interface ProductService {
 
     List<ProductResponse> getProductsByCategory(String category);
 
-    Products getProductById(Long id);
+    ProductResponse getProductById(Long id);
 
-    Products createProduct(Products product);
+    ProductResponse createProduct(ProductCreateRequest productCreateRequest);
 
-    Products updateProduct(Long id, Products product);
+    Products updateProduct(Long id, ProductUpdateRequest productUpdateRequest);
 
     void deleteProduct(Long id);
 
-    Products getProductBySKU(String productSKU);
+    ProductResponse getProductBySKU(String productSKU);
 
 
 }

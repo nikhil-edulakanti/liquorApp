@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import org.springframework.stereotype.Component;
 
 import com.example.liquorApp.dto.request.ProductCreateRequest;
+import com.example.liquorApp.dto.request.ProductUpdateRequest;
 import com.example.liquorApp.dto.response.ProductResponse;
 import com.example.liquorApp.entities.Products;
 @Component
@@ -45,6 +46,20 @@ public class ProductMapper {
         product.getImageUrl()
     );
 }
+    
+    public Products toEntity(ProductUpdateRequest request){
+        Products product = new Products();
+        product.setId(request.id());
+        product.setName(request.name());
+        product.setBrand(request.brand());
+        product.setCategory(request.category());
+        product.setAbvPercentage(new BigDecimal(request.abvPercentage()));
+        product.setPrice(request.price());
+        product.setImageUrl(request.imageUrl());
+        product.setProductSKU(request.productSKU());
+        return product;
+        
+    }
    
 }
     
